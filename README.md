@@ -1,5 +1,7 @@
 # Human Heart Anatomy — Interactive 3D Learning Lab
 
+**Live:** https://heart-anatomy-lab.vercel.app
+
 An interactive 3D heart for secondary-school and first-year biology:
 
 - Select, search and isolate the chambers, valves, great vessels, coronary arteries and cardiac veins.
@@ -61,6 +63,10 @@ The structure-to-element map is in `src/heart/source/structures.source.json`. Th
 | `tools/` | Model extraction and asset validation |
 | `tests/unit`, `tests/e2e` | Vitest and Playwright suites |
 | `docs/` | Research audit, architecture, testing, AI-generation design |
+
+## Deploy
+
+The site is a Vercel project (Vite preset, output `dist/`) connected to [github.com/Niyaz-05/heart-anatomy-lab](https://github.com/Niyaz-05/heart-anatomy-lab). Every push to `main` deploys to https://heart-anatomy-lab.vercel.app; pushes to other branches get preview URLs.
 
 ## Licences
 

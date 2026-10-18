@@ -42,6 +42,7 @@ Results recorded on 2026-10-16 on Windows 11, Node 22.14.0, headless Chromium (P
 | `npm run build` | **Pass**. JS bundle is 1,420 kB (394 kB gzip); Vite warns about chunk size, see Known issues |
 | `npm run e2e` | **Pass**: 16/16 in 5.6 min (software WebGL), after the light-theme layout change |
 | `npm audit` | 0 vulnerabilities at install time |
+| Live site (2026-10-18) | **Pass**: https://heart-anatomy-lab.vercel.app returns the page; `models/heart.glb` is served with the recorded sha256 `be55fe1c…`; the model renders in headless Chromium with no console errors |
 
 Two defects were caught by E2E and fixed before this run:
 

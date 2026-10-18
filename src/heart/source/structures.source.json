@@ -1,0 +1,52 @@
+{
+  "$comment": "Heart structures for the lab, mapped to BodyParts3D 4.0 element files (FJ ids) by their own English names and FMA concepts (isa/partof tables shipped with BodyParts3D). Written for this project from the BodyParts3D data; not copied from any other project's mapping. Each structure becomes one selectable node in heart.glb. 'zone' structures have no geometry of their own.",
+  "source": "BodyParts3D 4.0",
+  "structures": [
+    { "id": "right-atrium-wall", "kind": "mesh", "layer": "wall", "fma": ["FMA9457"], "elements": ["FJ2439"] },
+    { "id": "left-atrium-wall", "kind": "mesh", "layer": "wall", "fma": ["FMA9531"], "elements": ["FJ2438"] },
+    { "id": "ventricular-wall", "kind": "mesh", "layer": "wall", "fma": ["FMA13884"], "elements": ["FJ2428"] },
+
+    { "id": "right-atrium", "kind": "mesh", "layer": "chamber", "fma": ["FMA11359"], "elements": ["FJ2424"] },
+    { "id": "left-atrium", "kind": "mesh", "layer": "chamber", "fma": ["FMA9465"], "elements": ["FJ2425"] },
+    { "id": "right-ventricle", "kind": "mesh", "layer": "chamber", "fma": ["FMA9291"], "elements": ["FJ2423"] },
+    { "id": "left-ventricle", "kind": "mesh", "layer": "chamber", "fma": ["FMA9466"], "elements": ["FJ2422"] },
+
+    { "id": "interatrial-septum", "kind": "zone", "layer": "wall", "between": ["right-atrium", "left-atrium"] },
+    { "id": "interventricular-septum", "kind": "zone", "layer": "wall", "between": ["right-ventricle", "left-ventricle"] },
+
+    { "id": "tricuspid-valve", "kind": "mesh", "layer": "valve", "fma": ["FMA7238", "FMA7239", "FMA7240"], "elements": ["FJ2421", "FJ2433", "FJ2436"] },
+    { "id": "pulmonary-valve", "kind": "mesh", "layer": "valve", "fma": ["FMA7247", "FMA7249", "FMA7250"], "elements": ["FJ2417", "FJ2427", "FJ2434"] },
+    { "id": "mitral-valve", "kind": "mesh", "layer": "valve", "fma": ["FMA7242", "FMA7243"], "elements": ["FJ2420", "FJ2432"] },
+    { "id": "aortic-valve", "kind": "mesh", "layer": "valve", "fma": ["FMA7252", "FMA7253", "FMA7254"], "elements": ["FJ2426", "FJ2431", "FJ2435"] },
+
+    { "id": "right-papillary-muscles", "kind": "mesh", "layer": "valve", "fma": ["FMA7260", "FMA7261", "FMA7262"], "elements": ["FJ2419", "FJ2430", "FJ2437"] },
+    { "id": "left-papillary-muscles", "kind": "mesh", "layer": "valve", "fma": ["FMA7264", "FMA7265"], "elements": ["FJ2418", "FJ2429"] },
+
+    { "id": "superior-vena-cava", "kind": "mesh", "layer": "vessel", "fma": ["FMA4720"], "elements": ["FJ3645"] },
+    { "id": "inferior-vena-cava", "kind": "mesh", "layer": "vessel", "fma": ["FMA10951"], "elements": ["FJ3441"] },
+    { "id": "pulmonary-trunk", "kind": "mesh", "layer": "vessel", "fma": ["FMA8612"], "elements": ["FJ2966"] },
+    { "id": "right-pulmonary-artery", "kind": "mesh", "layer": "vessel", "fma": ["FMA50872"], "elements": ["FJ3019"] },
+    { "id": "left-pulmonary-artery", "kind": "mesh", "layer": "vessel", "fma": ["FMA50873"], "elements": ["FJ2924"] },
+    { "id": "right-superior-pulmonary-vein", "kind": "mesh", "layer": "vessel", "fma": ["FMA49914"], "elements": ["FJ3020"] },
+    { "id": "right-inferior-pulmonary-vein", "kind": "mesh", "layer": "vessel", "fma": ["FMA49911"], "elements": ["FJ3040"] },
+    { "id": "left-superior-pulmonary-vein", "kind": "mesh", "layer": "vessel", "fma": ["FMA49916"], "elements": ["FJ2925", "FJ2933"] },
+    { "id": "left-inferior-pulmonary-vein", "kind": "mesh", "layer": "vessel", "fma": ["FMA49913"], "elements": ["FJ2944", "FJ2950", "FJ2955"] },
+    { "id": "ascending-aorta", "kind": "mesh", "layer": "vessel", "fma": ["FMA3736"], "elements": ["FJ3413"] },
+    { "id": "aortic-arch", "kind": "mesh", "layer": "vessel", "fma": ["FMA3768"], "elements": ["FJ3411"] },
+    { "id": "descending-thoracic-aorta", "kind": "mesh", "layer": "vessel", "fma": ["FMA87217"], "elements": ["FJ1931"] },
+
+    { "id": "left-main-coronary-artery", "kind": "mesh", "layer": "coronary", "fma": ["FMA3855"], "elements": ["FJ2737"] },
+    { "id": "left-anterior-descending-artery", "kind": "mesh", "layer": "coronary", "fma": ["FMA74912", "FMA3860", "FMA3868", "FMA3872", "FMA3874", "FMA3876", "FMA3892"],
+      "elements": ["FJ2631", "FJ2632", "FJ2633", "FJ2634", "FJ2635", "FJ2636", "FJ2637", "FJ2638", "FJ2639", "FJ2640", "FJ2641", "FJ2642", "FJ2643", "FJ2644", "FJ2645", "FJ2646", "FJ2647", "FJ2648", "FJ2732", "FJ2733", "FJ2734"] },
+    { "id": "circumflex-artery", "kind": "mesh", "layer": "coronary", "fma": ["FMA3895"], "elements": ["FJ2649", "FJ2650", "FJ2651", "FJ2652", "FJ2653", "FJ2654"] },
+    { "id": "right-coronary-artery", "kind": "mesh", "layer": "coronary", "fma": ["FMA3802", "FMA3807", "FMA3815", "FMA3818", "FMA3837", "FMA3840", "FMA3847", "FMA3848"],
+      "elements": ["FJ2723", "FJ2667", "FJ2668", "FJ2670", "FJ2671", "FJ2672", "FJ2673", "FJ2674", "FJ2675", "FJ2676", "FJ2677", "FJ2692", "FJ2693", "FJ2694", "FJ2695", "FJ2696", "FJ2697", "FJ2698", "FJ2699", "FJ2700", "FJ2714", "FJ2715", "FJ2716", "FJ2717", "FJ2718", "FJ2719", "FJ2720", "FJ2721", "FJ2722", "FJ2735", "FJ2736"] },
+
+    { "id": "coronary-sinus", "kind": "mesh", "layer": "cardiac-vein", "fma": ["FMA4706"], "elements": ["FJ2655"] },
+    { "id": "great-cardiac-vein", "kind": "mesh", "layer": "cardiac-vein", "fma": ["FMA4707", "FMA66403"], "elements": ["FJ2656", "FJ2657", "FJ2658", "FJ2659", "FJ2660", "FJ2661", "FJ2662", "FJ2663", "FJ2664", "FJ2665"] },
+    { "id": "middle-cardiac-vein", "kind": "mesh", "layer": "cardiac-vein", "fma": ["FMA4713"], "elements": ["FJ2678", "FJ2679", "FJ2680", "FJ2681", "FJ2682", "FJ2683", "FJ2684", "FJ2685", "FJ2686", "FJ2687", "FJ2688", "FJ2689", "FJ2690", "FJ2691"] },
+    { "id": "small-cardiac-vein", "kind": "mesh", "layer": "cardiac-vein", "fma": ["FMA4714"], "elements": ["FJ2724", "FJ2731"] },
+    { "id": "other-cardiac-veins", "kind": "mesh", "layer": "cardiac-vein", "fma": ["FMA4712", "FMA4708", "FMA4716", "FMA76767"],
+      "elements": ["FJ2701", "FJ2702", "FJ2706", "FJ2707", "FJ2708", "FJ2709", "FJ2710", "FJ2711", "FJ2712", "FJ2713", "FJ2703", "FJ2704", "FJ2705", "FJ2727", "FJ2728", "FJ2729", "FJ2725", "FJ2730"] }
+  ]
+}

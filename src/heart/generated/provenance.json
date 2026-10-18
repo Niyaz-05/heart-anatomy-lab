@@ -1,0 +1,925 @@
+{
+  "output": {
+    "file": "public/models/heart.glb",
+    "bytes": 2402592,
+    "sha256": "be55fe1cc557e5ae964277a9ed8f143ade103c2101cb8a6c7a077586df5e5dac"
+  },
+  "dataset": {
+    "name": "BodyParts3D 4.0",
+    "owner": "The Database Center for Life Science (DBCLS)",
+    "license": "CC-BY-4.0",
+    "licenseUrl": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+    "download": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html",
+    "citation": "Mitsuhashi N, et al. BodyParts3D: 3D structure database for anatomical concepts. Nucleic Acids Res. 2009;37:D782-5. doi:10.1093/nar/gkn613"
+  },
+  "intermediate": {
+    "name": "Human Atlas (ashemag/human-atlas, fork Niyaz-05/human-atlas)",
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0 (BodyParts3D)",
+    "commit": "76f069640f2c3dd40a58d1556896ac25008f592e",
+    "changesBySource": "mm/Z-up to metres/Y-up; meshoptimizer simplification with 0.2% relative error bound per element; normals quantised to Int16",
+    "atlasJsonSha256": "c359f4bcd2cba90b7411d66d5e9fc04dc81294d46cd5c1e8b212c824f2e5bbee",
+    "chunkSha256": {
+      "body-8.bin": "18beacfdeadc8ad483d692672aae165f4323704cd7a9bfcbebbd703f5e268e25",
+      "body-14.bin": "58604526a0cd9e7dca4d8587cd9a42f9dd03ec6c4ebbc22a9bf017b31246f7e7",
+      "body-13.bin": "4c51b6be85d5b705d2b52b79b9ad1cdae0b65ad03c9402a2f2673c7633fd94f3",
+      "body-11.bin": "e8c1afe7f30fe710ad164ec9cd2287a32881606e7eb590af47d76b3f84405027",
+      "body-7.bin": "06340f48478eb989cec117a558290c0cd54eeead9641b565cbb8aab255b4e56b",
+      "body-9.bin": "0aa8aa09a379a2d759872659a2ef68fc4510ee37e435c4ebc63ee679722a4547"
+    }
+  },
+  "changesHere": "Selected the elements listed in src/heart/source/structures.source.json, merged them into one mesh per structure, decoded normals to Float32, translated so the centre of the heart walls is the origin. No vertex positions were otherwise altered.",
+  "centreOffsetMetres": [
+    0.021441,
+    1.304971,
+    0.023404
+  ],
+  "orientationChecks": {
+    "leftVentricleIsLeftOfRight": true,
+    "leftAtriumIsPosteriorToRightVentricle": true,
+    "descendingAortaIsPosterior": true,
+    "superiorVenaCavaIsAboveInferior": true
+  },
+  "structures": [
+    {
+      "id": "right-atrium-wall",
+      "elements": [
+        {
+          "id": "FJ2439",
+          "name": "Wall of right atrium",
+          "conceptId": "FMA9457"
+        }
+      ]
+    },
+    {
+      "id": "left-atrium-wall",
+      "elements": [
+        {
+          "id": "FJ2438",
+          "name": "Wall of left atrium",
+          "conceptId": "FMA9531"
+        }
+      ]
+    },
+    {
+      "id": "ventricular-wall",
+      "elements": [
+        {
+          "id": "FJ2428",
+          "name": "Wall of ventricle",
+          "conceptId": "FMA13884"
+        }
+      ]
+    },
+    {
+      "id": "right-atrium",
+      "elements": [
+        {
+          "id": "FJ2424",
+          "name": "Cavity of right atrium",
+          "conceptId": "FMA11359"
+        }
+      ]
+    },
+    {
+      "id": "left-atrium",
+      "elements": [
+        {
+          "id": "FJ2425",
+          "name": "Cavity of left atrium",
+          "conceptId": "FMA9465"
+        }
+      ]
+    },
+    {
+      "id": "right-ventricle",
+      "elements": [
+        {
+          "id": "FJ2423",
+          "name": "Cavity of right ventricle",
+          "conceptId": "FMA9291"
+        }
+      ]
+    },
+    {
+      "id": "left-ventricle",
+      "elements": [
+        {
+          "id": "FJ2422",
+          "name": "Cavity of left ventricle",
+          "conceptId": "FMA9466"
+        }
+      ]
+    },
+    {
+      "id": "tricuspid-valve",
+      "elements": [
+        {
+          "id": "FJ2421",
+          "name": "Anterior leaflet of tricuspid valve",
+          "conceptId": "FMA7238"
+        },
+        {
+          "id": "FJ2433",
+          "name": "Posterior leaflet of tricuspid valve",
+          "conceptId": "FMA7239"
+        },
+        {
+          "id": "FJ2436",
+          "name": "Septal leaflet of tricuspid valve",
+          "conceptId": "FMA7240"
+        }
+      ]
+    },
+    {
+      "id": "pulmonary-valve",
+      "elements": [
+        {
+          "id": "FJ2417",
+          "name": "Left anterior cusp of pulmonary valve",
+          "conceptId": "FMA7247"
+        },
+        {
+          "id": "FJ2427",
+          "name": "Posterior cusp of pulmonary valve",
+          "conceptId": "FMA7250"
+        },
+        {
+          "id": "FJ2434",
+          "name": "Right anterior cusp of pulmonary valve",
+          "conceptId": "FMA7249"
+        }
+      ]
+    },
+    {
+      "id": "mitral-valve",
+      "elements": [
+        {
+          "id": "FJ2420",
+          "name": "Anterior leaflet of mitral valve",
+          "conceptId": "FMA7242"
+        },
+        {
+          "id": "FJ2432",
+          "name": "Posterior leaflet of mitral valve",
+          "conceptId": "FMA7243"
+        }
+      ]
+    },
+    {
+      "id": "aortic-valve",
+      "elements": [
+        {
+          "id": "FJ2426",
+          "name": "Left posterior cusp of aortic valve",
+          "conceptId": "FMA7254"
+        },
+        {
+          "id": "FJ2431",
+          "name": "Right posterior cusp of aortic valve",
+          "conceptId": "FMA7252"
+        },
+        {
+          "id": "FJ2435",
+          "name": "Anterior cusp of aortic valve",
+          "conceptId": "FMA7253"
+        }
+      ]
+    },
+    {
+      "id": "right-papillary-muscles",
+      "elements": [
+        {
+          "id": "FJ2419",
+          "name": "Anterior papillary muscle of right ventricle",
+          "conceptId": "FMA7260"
+        },
+        {
+          "id": "FJ2430",
+          "name": "Posterior papillary muscle of right ventricle",
+          "conceptId": "FMA7261"
+        },
+        {
+          "id": "FJ2437",
+          "name": "Septal papillary muscle of right ventricle",
+          "conceptId": "FMA7262"
+        }
+      ]
+    },
+    {
+      "id": "left-papillary-muscles",
+      "elements": [
+        {
+          "id": "FJ2418",
+          "name": "Anterolateral head of lateral papillary muscle of left ventricle",
+          "conceptId": "FMA7265"
+        },
+        {
+          "id": "FJ2429",
+          "name": "Lateral papillary muscle of left ventricle",
+          "conceptId": "FMA7264"
+        }
+      ]
+    },
+    {
+      "id": "superior-vena-cava",
+      "elements": [
+        {
+          "id": "FJ3645",
+          "name": "Superior vena cava",
+          "conceptId": "FMA4720"
+        }
+      ]
+    },
+    {
+      "id": "inferior-vena-cava",
+      "elements": [
+        {
+          "id": "FJ3441",
+          "name": "Inferior vena cava",
+          "conceptId": "FMA10951"
+        }
+      ]
+    },
+    {
+      "id": "pulmonary-trunk",
+      "elements": [
+        {
+          "id": "FJ2966",
+          "name": "Pulmonary trunk",
+          "conceptId": "FMA8612"
+        }
+      ]
+    },
+    {
+      "id": "right-pulmonary-artery",
+      "elements": [
+        {
+          "id": "FJ3019",
+          "name": "Right pulmonary artery",
+          "conceptId": "FMA50872"
+        }
+      ]
+    },
+    {
+      "id": "left-pulmonary-artery",
+      "elements": [
+        {
+          "id": "FJ2924",
+          "name": "Left pulmonary artery",
+          "conceptId": "FMA50873"
+        }
+      ]
+    },
+    {
+      "id": "right-superior-pulmonary-vein",
+      "elements": [
+        {
+          "id": "FJ3020",
+          "name": "Right superior pulmonary vein",
+          "conceptId": "FMA49914"
+        }
+      ]
+    },
+    {
+      "id": "right-inferior-pulmonary-vein",
+      "elements": [
+        {
+          "id": "FJ3040",
+          "name": "Right inferior pulmonary vein",
+          "conceptId": "FMA49911"
+        }
+      ]
+    },
+    {
+      "id": "left-superior-pulmonary-vein",
+      "elements": [
+        {
+          "id": "FJ2925",
+          "name": "Left superior pulmonary vein",
+          "conceptId": "FMA49916"
+        },
+        {
+          "id": "FJ2933",
+          "name": "Left superior pulmonary vein",
+          "conceptId": "FMA49916"
+        }
+      ]
+    },
+    {
+      "id": "left-inferior-pulmonary-vein",
+      "elements": [
+        {
+          "id": "FJ2944",
+          "name": "Left inferior pulmonary vein",
+          "conceptId": "FMA49913"
+        },
+        {
+          "id": "FJ2950",
+          "name": "Left inferior pulmonary vein",
+          "conceptId": "FMA49913"
+        },
+        {
+          "id": "FJ2955",
+          "name": "Left inferior pulmonary vein",
+          "conceptId": "FMA49913"
+        }
+      ]
+    },
+    {
+      "id": "ascending-aorta",
+      "elements": [
+        {
+          "id": "FJ3413",
+          "name": "Ascending aorta",
+          "conceptId": "FMA3736"
+        }
+      ]
+    },
+    {
+      "id": "aortic-arch",
+      "elements": [
+        {
+          "id": "FJ3411",
+          "name": "Arch of aorta",
+          "conceptId": "FMA3768"
+        }
+      ]
+    },
+    {
+      "id": "descending-thoracic-aorta",
+      "elements": [
+        {
+          "id": "FJ1931",
+          "name": "Descending thoracic aorta",
+          "conceptId": "FMA87217"
+        }
+      ]
+    },
+    {
+      "id": "left-main-coronary-artery",
+      "elements": [
+        {
+          "id": "FJ2737",
+          "name": "Trunk of left coronary artery",
+          "conceptId": "FMA3855"
+        }
+      ]
+    },
+    {
+      "id": "left-anterior-descending-artery",
+      "elements": [
+        {
+          "id": "FJ2631",
+          "name": "Trunk of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA74912"
+        },
+        {
+          "id": "FJ2632",
+          "name": "First right anterior branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3872"
+        },
+        {
+          "id": "FJ2633",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2634",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2635",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2636",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2637",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2638",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2639",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2640",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2641",
+          "name": "Third right anterior branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3876"
+        },
+        {
+          "id": "FJ2642",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2643",
+          "name": "Conus branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3868"
+        },
+        {
+          "id": "FJ2644",
+          "name": "Conus branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3868"
+        },
+        {
+          "id": "FJ2645",
+          "name": "First right anterior branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3872"
+        },
+        {
+          "id": "FJ2646",
+          "name": "Second right anterior branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3874"
+        },
+        {
+          "id": "FJ2647",
+          "name": "Third right anterior branch of anterior interventricular branch of left coronary artery",
+          "conceptId": "FMA3876"
+        },
+        {
+          "id": "FJ2648",
+          "name": "Diagonal branch of anterior descending branch of left coronary artery",
+          "conceptId": "FMA3860"
+        },
+        {
+          "id": "FJ2732",
+          "name": "Septal branch of anterior interventricular artery",
+          "conceptId": "FMA3892"
+        },
+        {
+          "id": "FJ2733",
+          "name": "Septal branch of anterior interventricular artery",
+          "conceptId": "FMA3892"
+        },
+        {
+          "id": "FJ2734",
+          "name": "Septal branch of anterior interventricular artery",
+          "conceptId": "FMA3892"
+        }
+      ]
+    },
+    {
+      "id": "circumflex-artery",
+      "elements": [
+        {
+          "id": "FJ2649",
+          "name": "Circumflex branch of left coronary artery",
+          "conceptId": "FMA3895"
+        },
+        {
+          "id": "FJ2650",
+          "name": "Circumflex branch of left coronary artery",
+          "conceptId": "FMA3895"
+        },
+        {
+          "id": "FJ2651",
+          "name": "Circumflex branch of left coronary artery",
+          "conceptId": "FMA3895"
+        },
+        {
+          "id": "FJ2652",
+          "name": "Circumflex branch of left coronary artery",
+          "conceptId": "FMA3895"
+        },
+        {
+          "id": "FJ2653",
+          "name": "Circumflex branch of left coronary artery",
+          "conceptId": "FMA3895"
+        },
+        {
+          "id": "FJ2654",
+          "name": "Circumflex branch of left coronary artery",
+          "conceptId": "FMA3895"
+        }
+      ]
+    },
+    {
+      "id": "right-coronary-artery",
+      "elements": [
+        {
+          "id": "FJ2723",
+          "name": "Trunk of right coronary artery",
+          "conceptId": "FMA3802"
+        },
+        {
+          "id": "FJ2667",
+          "name": "Marginal branch of right coronary artery",
+          "conceptId": "FMA3818"
+        },
+        {
+          "id": "FJ2668",
+          "name": "Marginal branch of right coronary artery",
+          "conceptId": "FMA3818"
+        },
+        {
+          "id": "FJ2670",
+          "name": "Right conus artery",
+          "conceptId": "FMA3807"
+        },
+        {
+          "id": "FJ2671",
+          "name": "First anterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3815"
+        },
+        {
+          "id": "FJ2672",
+          "name": "Marginal branch of right coronary artery",
+          "conceptId": "FMA3818"
+        },
+        {
+          "id": "FJ2673",
+          "name": "First anterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3815"
+        },
+        {
+          "id": "FJ2674",
+          "name": "Marginal branch of right coronary artery",
+          "conceptId": "FMA3818"
+        },
+        {
+          "id": "FJ2675",
+          "name": "Marginal branch of right coronary artery",
+          "conceptId": "FMA3818"
+        },
+        {
+          "id": "FJ2676",
+          "name": "Right conus artery",
+          "conceptId": "FMA3807"
+        },
+        {
+          "id": "FJ2677",
+          "name": "First anterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3815"
+        },
+        {
+          "id": "FJ2692",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2693",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2694",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2695",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2696",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2697",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2698",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2699",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2700",
+          "name": "Posterior interventricular branch of right coronary artery",
+          "conceptId": "FMA3840"
+        },
+        {
+          "id": "FJ2714",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2715",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2716",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2717",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2718",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2719",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2720",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2721",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2722",
+          "name": "First posterior ventricular branch of right coronary artery",
+          "conceptId": "FMA3837"
+        },
+        {
+          "id": "FJ2735",
+          "name": "First septal branch of right posterior interventricular artery",
+          "conceptId": "FMA3847"
+        },
+        {
+          "id": "FJ2736",
+          "name": "Second septal branch of right posterior interventricular artery",
+          "conceptId": "FMA3848"
+        }
+      ]
+    },
+    {
+      "id": "coronary-sinus",
+      "elements": [
+        {
+          "id": "FJ2655",
+          "name": "Coronary sinus",
+          "conceptId": "FMA4706"
+        }
+      ]
+    },
+    {
+      "id": "great-cardiac-vein",
+      "elements": [
+        {
+          "id": "FJ2656",
+          "name": "Great cardiac vein",
+          "conceptId": "FMA4707"
+        },
+        {
+          "id": "FJ2657",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2658",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2659",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2660",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2661",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2662",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2663",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2664",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        },
+        {
+          "id": "FJ2665",
+          "name": "Anterior interventricular vein",
+          "conceptId": "FMA66403"
+        }
+      ]
+    },
+    {
+      "id": "middle-cardiac-vein",
+      "elements": [
+        {
+          "id": "FJ2678",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2679",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2680",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2681",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2682",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2683",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2684",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2685",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2686",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2687",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2688",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2689",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2690",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        },
+        {
+          "id": "FJ2691",
+          "name": "Middle cardiac vein",
+          "conceptId": "FMA4713"
+        }
+      ]
+    },
+    {
+      "id": "small-cardiac-vein",
+      "elements": [
+        {
+          "id": "FJ2724",
+          "name": "Small cardiac vein",
+          "conceptId": "FMA4714"
+        },
+        {
+          "id": "FJ2731",
+          "name": "Small cardiac vein",
+          "conceptId": "FMA4714"
+        }
+      ]
+    },
+    {
+      "id": "other-cardiac-veins",
+      "elements": [
+        {
+          "id": "FJ2701",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2702",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2706",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2707",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2708",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2709",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2710",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2711",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2712",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2713",
+          "name": "Posterior vein of left ventricle",
+          "conceptId": "FMA4712"
+        },
+        {
+          "id": "FJ2703",
+          "name": "Left marginal vein",
+          "conceptId": "FMA4708"
+        },
+        {
+          "id": "FJ2704",
+          "name": "Left marginal vein",
+          "conceptId": "FMA4708"
+        },
+        {
+          "id": "FJ2705",
+          "name": "Left marginal vein",
+          "conceptId": "FMA4708"
+        },
+        {
+          "id": "FJ2727",
+          "name": "Right marginal vein",
+          "conceptId": "FMA4716"
+        },
+        {
+          "id": "FJ2728",
+          "name": "Right marginal vein",
+          "conceptId": "FMA4716"
+        },
+        {
+          "id": "FJ2729",
+          "name": "Right marginal vein",
+          "conceptId": "FMA4716"
+        },
+        {
+          "id": "FJ2725",
+          "name": "Anterior cardiac vein",
+          "conceptId": "FMA76767"
+        },
+        {
+          "id": "FJ2730",
+          "name": "Anterior cardiac vein",
+          "conceptId": "FMA76767"
+        }
+      ]
+    }
+  ]
+}

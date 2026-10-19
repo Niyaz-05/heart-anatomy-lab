@@ -9,6 +9,7 @@ import { FlowParticles } from './FlowParticles';
 import { LabelLayer } from './LabelLayer';
 import { hasWebGL, prefersReducedMotion } from './webgl';
 import { heartBounds, modelBounds } from '../heart/anchors';
+import { Lighting } from './Lighting';
 
 class SceneBoundary extends Component<{ onError: (e: Error) => void; children: ReactNode }, { failed: boolean }> {
   override state = { failed: false };
@@ -144,9 +145,7 @@ export function HeartViewer({ insets = NO_INSETS }: { insets?: ViewInsets }) {
             }}
             aria-hidden="true"
           >
-            <hemisphereLight args={['#ffffff', '#8a8076', 1.0]} />
-            <directionalLight position={[0.4, 0.6, 0.8]} intensity={1.6} />
-            <directionalLight position={[-0.6, -0.2, -0.5]} intensity={0.55} />
+            <Lighting />
             <Suspense fallback={null}>
               <HeartModel onReady={onReady} />
             </Suspense>

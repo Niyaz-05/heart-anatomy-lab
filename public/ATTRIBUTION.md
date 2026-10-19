@@ -18,7 +18,8 @@
    - decoded the normals to 32-bit floats;
    - translated the model so the centre of the heart walls is the origin.
    - No other geometry was altered.
-3. Output `heart.glb` sha256: `be55fe1cc557e5ae964277a9ed8f143ade103c2101cb8a6c7a077586df5e5dac`. The full per-element record is in `src/heart/generated/provenance.json`.
+3. `tools/bake-shading.mjs` added a per-vertex attribute (`_TISSUE`: ambient occlusion, colour variation, and an epicardial-fat mask near the coronary vessels) for the real-tissue rendering. No positions were changed. The unbaked model's sha256 is `be55fe1cc557e5ae964277a9ed8f143ade103c2101cb8a6c7a077586df5e5dac`.
+4. Output `heart.glb` sha256: `0c734c396007422badf0dd027bccc5821537c9f9c1217cdd3eb9139c0bb3a802`. The full per-element record is in `src/heart/generated/provenance.json`.
 
 To rebuild from the official archive instead, download `isa_BP3D_4.0_obj_99.zip` from the DBCLS page above and convert it with the same axis and unit transform. See `docs/research/IMPLEMENTATION_PLAN.md`.
 

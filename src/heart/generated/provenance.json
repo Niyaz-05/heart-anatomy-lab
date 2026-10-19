@@ -1,8 +1,8 @@
 {
   "output": {
     "file": "public/models/heart.glb",
-    "bytes": 2402592,
-    "sha256": "be55fe1cc557e5ae964277a9ed8f143ade103c2101cb8a6c7a077586df5e5dac"
+    "bytes": 2632752,
+    "sha256": "0c734c396007422badf0dd027bccc5821537c9f9c1217cdd3eb9139c0bb3a802"
   },
   "dataset": {
     "name": "BodyParts3D 4.0",
@@ -921,5 +921,101 @@
         }
       ]
     }
-  ]
+  ],
+  "shadingBake": {
+    "tool": "tools/bake-shading.mjs",
+    "config": {
+      "$comment": "Shading bake for the real-tissue look (tools/bake-shading.mjs). occluders: which layers can shade each layer. fat: epicardial fat tint on the heart wall near the coronary arteries and cardiac veins, which run in fat-filled grooves.",
+      "model": "public/models/heart.glb",
+      "provenance": "src/heart/generated/provenance.json",
+      "aoDistance": 0.012,
+      "rays": 48,
+      "rayOffset": 0.0003,
+      "noiseFrequency": 180,
+      "occluders": {
+        "wall": [
+          "wall",
+          "vessel",
+          "coronary",
+          "cardiac-vein",
+          "valve"
+        ],
+        "chamber": [
+          "chamber",
+          "valve"
+        ],
+        "valve": [
+          "valve",
+          "chamber"
+        ],
+        "vessel": [
+          "vessel",
+          "wall",
+          "coronary",
+          "cardiac-vein"
+        ],
+        "coronary": [
+          "coronary",
+          "cardiac-vein",
+          "wall",
+          "vessel"
+        ],
+        "cardiac-vein": [
+          "cardiac-vein",
+          "coronary",
+          "wall",
+          "vessel"
+        ]
+      },
+      "fat": {
+        "tissueLayers": [
+          "wall"
+        ],
+        "sourceLayers": [
+          "coronary",
+          "cardiac-vein"
+        ],
+        "near": 0.0008,
+        "far": 0.0032
+      }
+    },
+    "attribute": "_TISSUE (VEC4 unsigned byte, normalised): r ambient occlusion, g mottling noise, b fat proximity, a unused",
+    "unbakedSha256": "be55fe1cc557e5ae964277a9ed8f143ade103c2101cb8a6c7a077586df5e5dac",
+    "unbakedOutput": {
+      "bytes": 2402592
+    },
+    "vertices": 56278,
+    "layers": {
+      "wall": {
+        "meshes": 3,
+        "meanAO": 0.664,
+        "vertices": 10862
+      },
+      "chamber": {
+        "meshes": 4,
+        "meanAO": 0.839,
+        "vertices": 2810
+      },
+      "valve": {
+        "meshes": 6,
+        "meanAO": 0.644,
+        "vertices": 12824
+      },
+      "vessel": {
+        "meshes": 12,
+        "meanAO": 0.705,
+        "vertices": 4296
+      },
+      "coronary": {
+        "meshes": 4,
+        "meanAO": 0.623,
+        "vertices": 14347
+      },
+      "cardiac-vein": {
+        "meshes": 5,
+        "meanAO": 0.615,
+        "vertices": 11139
+      }
+    }
+  }
 }

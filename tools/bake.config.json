@@ -1,0 +1,18 @@
+{
+  "$comment": "Shading bake for the real-tissue look (tools/bake-shading.mjs). occluders: which layers can shade each layer. fat: epicardial fat tint on the heart wall near the coronary arteries and cardiac veins, which run in fat-filled grooves.",
+  "model": "public/models/heart.glb",
+  "provenance": "src/heart/generated/provenance.json",
+  "aoDistance": 0.012,
+  "rays": 48,
+  "rayOffset": 0.0003,
+  "noiseFrequency": 180,
+  "occluders": {
+    "wall": ["wall", "vessel", "coronary", "cardiac-vein", "valve"],
+    "chamber": ["chamber", "valve"],
+    "valve": ["valve", "chamber"],
+    "vessel": ["vessel", "wall", "coronary", "cardiac-vein"],
+    "coronary": ["coronary", "cardiac-vein", "wall", "vessel"],
+    "cardiac-vein": ["cardiac-vein", "coronary", "wall", "vessel"]
+  },
+  "fat": { "tissueLayers": ["wall"], "sourceLayers": ["coronary", "cardiac-vein"], "near": 0.0008, "far": 0.0032 }
+}

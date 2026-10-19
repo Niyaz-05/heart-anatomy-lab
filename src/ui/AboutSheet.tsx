@@ -47,9 +47,11 @@ export function AboutSheet({ onClose }: { onClose: () => void }) {
           <span><span className="dot" style={{ background: BLOOD['oxygen-rich'] }} aria-hidden="true" /> Oxygen-rich blood</span>
         </p>
         <p className="small muted">
-          Colour shows the blood's oxygen content. "Artery" and "vein" only describe direction: arteries carry blood away
-          from the heart, veins towards it. So the pulmonary arteries carry oxygen-poor blood and the pulmonary veins
-          carry oxygen-rich blood.
+          The heart is shown in its real colours: red-brown muscle with yellow fat along the coronary vessels, pale valves
+          and artery walls, dark veins, and blood that is bright red when rich in oxygen and dark red when poor in oxygen
+          (never blue). In the blood-flow animation the dark red is drawn slightly purple so the two are easy to tell
+          apart. "Artery" and "vein" only describe direction: arteries carry blood away from the heart, veins towards it.
+          So the pulmonary arteries carry oxygen-poor blood and the pulmonary veins carry oxygen-rich blood.
         </p>
 
         <h3 className="group-title">Please note</h3>

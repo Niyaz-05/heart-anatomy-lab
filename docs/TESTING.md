@@ -67,7 +67,26 @@ Defect found while building the lungs lab (shared label code) and fixed here:
 - The off-model tags ("To the right lung") can sit close to the viewer edge at some zoom levels.
 - three.js logs a deprecation warning for `THREE.Clock` (from @react-three/fiber internals). It does not affect behaviour.
 
+## Results: real-tissue look (2026-10-19)
+
+Re-run on Windows 11, Node 22.14.0, headless Chromium (software WebGL, which uses the automatic low-quality mode), after adding the real-tissue look.
+
+| Check | Result |
+|---|---|
+| `npm run typecheck` | **Pass** |
+| `npm test` | **Pass**: 26/26 |
+| `npm run validate:assets` | **Pass**: 34 nodes, 85,624 triangles, sha256 `0c734c396007…`, with the baked `_TISSUE` attribute on every mesh |
+| `npm run build` | **Pass** |
+| `npm run e2e` | **Pass**: 16/16 in 13.9 min |
+
+Defects found and fixed while building the look:
+
+- **Muscle looked yellow.** ACES tone mapping shifted the red muscle toward orange-yellow; it is now Neutral tone mapping.
+- **Fat looked blotchy.** The first epicardial-fat mask spread over most of the ventricles. Fat is now limited to concave grooves within about 3 mm of the coronary vessels, and it keeps its brightness in shadow.
+
 ## Not verified
+
+- **The real-tissue look on real GPUs.** High quality (clear coat and sheen) was reviewed in headless screenshots with `?quality=high`; its frame rate on real laptops and phones is not measured. The automatic switch to low quality on slow frames has not been tried on a real device.
 
 - **Physical devices and GPUs.** All browser tests ran with software WebGL in headless Chromium. Frame rate on a real mid-range laptop or phone, and real multitouch (pinch and two-finger pan), have not been tested.
 - **Other browsers.** Firefox and Safari were not run.

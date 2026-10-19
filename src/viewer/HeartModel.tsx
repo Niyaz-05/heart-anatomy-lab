@@ -4,11 +4,12 @@ import { useThree, type ThreeEvent } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useLab } from '../app/LabContext';
 import { focusIds, highlightedIds, isVisible } from '../app/state';
-import { baseColour, HIGHLIGHT, HOVER } from './palette';
+import { HIGHLIGHT, HOVER, realLook } from './palette';
+import { applyQuality, hasTissueData, makeTissueMaterial, quality, type TissueMaterial } from './tissue';
 
 export const MODEL_URL = `${import.meta.env.BASE_URL}models/heart.glb`;
 
-const GREY = new THREE.Color('#8a8a8a');
+const GREY = new THREE.Color('#9a8f8c');
 const HIGHLIGHT_COLOUR = new THREE.Color(HIGHLIGHT);
 
 /** Pointer travel (px) above which a press is treated as a drag (rotate), not a pick. */
@@ -17,7 +18,7 @@ const CLICK_SLOP = 5;
 interface Part {
   id: string;
   mesh: THREE.Mesh;
-  material: THREE.MeshStandardMaterial;
+  material: TissueMaterial;
   base: THREE.Color;
   layer: string;
 }
@@ -35,13 +36,9 @@ export function HeartModel({ onReady }: { onReady?: () => void }) {
       const id = o.name || o.parent?.name || '';
       const s = def.structures.find((x) => x.id === id);
       if (!s) return;
-      const base = new THREE.Color(baseColour(s));
-      const material = new THREE.MeshStandardMaterial({
-        color: base.clone(),
-        roughness: s.layer === 'valve' ? 0.55 : 0.62,
-        metalness: 0.02,
-        side: THREE.DoubleSide,
-      });
+      const look = realLook(s);
+      const base = new THREE.Color(look.color);
+      const material = makeTissueMaterial(look, hasTissueData(o));
       out.set(id, { id, mesh: o, material, base, layer: s.layer });
     });
     return out;
@@ -57,6 +54,12 @@ export function HeartModel({ onReady }: { onReady?: () => void }) {
     onReady?.();
     return () => parts.forEach((p) => p.material.dispose());
   }, [parts, onReady]);
+
+  // Follow quality changes (a slow device drops the costly coat and sheen).
+  useEffect(() => quality.subscribe((level) => {
+    for (const p of parts.values()) { applyQuality(p.material, level); p.material.needsUpdate = true; }
+    invalidate();
+  }), [parts, invalidate]);
 
   const focus = focusIds(def, state);
   const lit = highlightedIds(def, focus);
@@ -74,7 +77,7 @@ export function HeartModel({ onReady }: { onReady?: () => void }) {
       const isLit = lit.has(p.id);
       const isHover = state.hovered === p.id && !isLit;
       p.material.emissive.set(isLit ? HIGHLIGHT : isHover ? HOVER : '#000000');
-      p.material.emissiveIntensity = isLit ? 0.55 : isHover ? 0.35 : 0;
+      p.material.emissiveIntensity = isLit ? 0.4 : isHover ? 0.3 : 0;
       // Dim the rest while something is in focus, so the focus reads without hiding context.
       const dim = lit.size > 0 && !isLit;
       p.material.color.copy(p.base);

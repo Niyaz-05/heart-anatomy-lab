@@ -26,7 +26,7 @@ heart/      definition (data) · flowPath · anchors          (no React; reads g
 app/        state reducer · search · context                (React only in LabContext)
 viewer/     HeartViewer · HeartModel · CameraRig · FlowParticles · LabelLayer   (three / R3F)
 ui/         StructurePanel · DetailPanel · FlowPanel · TourPanel               (DOM only)
-tools/      extract-heart · validate-assets                 (Node build-time)
+tools/      extract-heart · bake-shading · validate-assets  (Node build-time)
 ```
 
 - **State** (`app/state.ts`) is a pure reducer. It covers selection, hover, visible layers, isolate, labels, mode, flow play state, tour index and camera requests. Visibility rules are pure functions (`isVisible`, `highlightedIds`, `focusIds`) shared by the scene and the panels, so the list's "hidden" tags always agree with the 3D view.
@@ -45,13 +45,42 @@ tools/      extract-heart · validate-assets                 (Node build-time)
   - Model load error or lost GPU context: an error alert with **Try again**, which clears the loader cache.
   - Invalid definition: an issue list.
 
+## The real-tissue look
+
+The heart is drawn as it looks in a fresh specimen:
+
+- red-brown muscle, with yellow epicardial fat in the grooves along the coronary vessels;
+- pale fibrous valves and pale artery walls;
+- dark purple-red veins;
+- blood in the chambers bright red (oxygen-rich) or dark red (oxygen-poor), never blue.
+
+In the blood-flow animation the dark red is drawn slightly purple, so the two streams are easy to tell apart. `src/viewer/tissue.ts` and `src/viewer/Lighting.tsx` are the same files in the heart, lungs and brain labs.
+
+- **Material.** `MeshPhysicalMaterial` with a clear coat (moist surface) and sheen (velvety tissue), plus a shader hook that:
+  - reads the baked `_TISSUE` attribute;
+  - darkens folds and grooves by ambient occlusion, including their reflections;
+  - varies the colour with noise;
+  - tints the baked fat;
+  - adds a soft warm rim where the surface turns away, a cheap stand-in for light scattering under living tissue.
+- **Lighting.** Image-based light from three's built-in `RoomEnvironment` (no download), a warm key, a soft back light and a fill. Neutral tone mapping keeps reds true (ACES turned the red muscle yellowish).
+- **Quality.**
+  - **High:** draws the coat and sheen.
+  - **Low:** leaves them out (a much cheaper shader).
+  - **Choosing:** low is picked on software renderers and when animation frames stay above 50 ms. `?quality=high|low` overrides it.
+- **Bake.** `tools/bake-shading.mjs` (config in `tools/bake.config.json`) writes `_TISSUE` into the model:
+  - **r:** ambient occlusion, from 48 fixed rays per vertex through a `three-mesh-bvh` tree;
+  - **g:** colour noise;
+  - **b:** an epicardial-fat mask, for wall vertices within about 3 mm of a coronary artery or cardiac vein *and* in a concave groove.
+
+  It is deterministic and updates the output hash in `provenance.json`. Run it after the extraction.
+
 ## Asset pipeline
 
 ```
 BodyParts3D 4.0 OBJ  ──(Human Atlas converter, MIT)──▶  atlas.json + *.bin
    (DBCLS, CC BY 4.0)                                   (metres, Y-up, simplified ≤0.2 %)
         │
-        └──(tools/extract-heart.mjs)──▶ public/models/heart.glb  (34 nodes, 85,624 triangles, 2.4 MB)
+        └──(tools/extract-heart.mjs, then tools/bake-shading.mjs)──▶ public/models/heart.glb  (34 nodes, 85,624 triangles, 2.6 MB)
                                         src/heart/generated/geometry.json
                                         src/heart/generated/provenance.json  (sha256 of every input and the output)
 ```

@@ -15,7 +15,8 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "heart:extract": "node tools/extract-heart.mjs",
-    "validate:assets": "node tools/validate-assets.mjs"
+    "validate:assets": "node tools/validate-assets.mjs",
+    "bake:shading": "node tools/bake-shading.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^19.2.0",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "three-mesh-bvh": "^0.9.16",
     "typescript": "~5.9.3",
     "vite": "^8.3.4",
     "vitest": "^5.0.5"

@@ -10,7 +10,8 @@ Results recorded on 2026-10-16 on Windows 11, Node 22.14.0, headless Chromium (P
 | Unit | `npm test` | Definition validity, validation-gate rejections, oxygenation labelling, canonical flow order, flow streams (order, containment, connectivity, sides), reducer (select, layers, isolate, reset, tour clamping), search |
 | Assets | `npm run validate:assets` | GLB sha256 = provenance, node set = geometry record, finite positions in a 0.2 m box, unit normals, indices in range, triangle counts, attribution text |
 | Build | `npm run build` | Type check + production bundle |
-| E2E | `npm run build && npm run e2e` | See the list below; screenshots go to `docs/screenshots/` |
+| E2E (GPU) | `npm run build && npx playwright test --project=gpu` | Every scenario below, in installed Google Chrome with hardware WebGL; screenshots go to `docs/screenshots/` |
+| E2E (software) | `npx playwright test --project=software` | The scenarios tagged @smoke, in Playwright's Chromium with software WebGL (SwiftShader) |
 | Dependencies | `npm audit` | Run at install: 0 vulnerabilities reported by the npm registry advisory database on 2026-10-16 |
 
 ## E2E scenarios (`tests/e2e/lab.spec.ts`)
@@ -26,8 +27,9 @@ Results recorded on 2026-10-16 on Windows 11, Node 22.14.0, headless Chromium (P
 9. Guided tour: Next, Back, jump to a step, Finish.
 10. Keyboard: arrow keys orbit; Escape clears the selection.
 11. Phone (390×844): no horizontal overflow; the Structures dock button opens the panel; picking a structure closes it and shows the details sheet.
-12. `?nowebgl`: a fallback message; the structure list and details still work.
-13. A missing model (HTTP 404): an error alert; Try again refetches and loads.
+12. **Phone and tablet layouts (`tests/e2e/responsive.spec.ts`), at 390×844, 844×390, 768×1024, 820×1180, 1024×768 and 1366×820** (touch emulation below 1024 px): the layout is the expected one (`sheet`, `landscape` or `desktop`); no horizontal scroll; title, modes, dock and details stay on screen and do not overlap; at least a third of the screen is left for the model beside or above the details; finger-sized (≥ 44 px) controls on touch; the bottom sheet folds to one line, opens and expands by tap, by keyboard and by dragging the handle; every mode fits and its panel scrolls to its end; screenshots in `docs/screenshots/responsive/`.
+13. `?nowebgl`: a fallback message; the structure list and details still work.
+14. A missing model (HTTP 404): an error alert; Try again refetches and loads.
 14. Reduced motion: flow mode runs without errors.
 15. Uncluttered screen: no details sheet until something is selected; no disclaimer or learning-goal text on the main screen; model note and sources are folded away.
 16. About (ⓘ) sheet: shows the BodyParts3D CC BY 4.0 credit and disclaimers; closes with Escape and with ✕; also opens from "Source & credits".
@@ -40,7 +42,9 @@ Results recorded on 2026-10-16 on Windows 11, Node 22.14.0, headless Chromium (P
 | `npm test` | **Pass**: 26/26 tests in 2 files |
 | `npm run validate:assets` | **Pass**: 34 nodes, 85,624 triangles, sha256 `be55fe1cc557…` |
 | `npm run build` | **Pass**. JS bundle is 1,420 kB (394 kB gzip); Vite warns about chunk size, see Known issues |
-| `npm run e2e` | **Pass**: 16/16 in 5.6 min (software WebGL), after the light-theme layout change |
+| `npm run e2e` (older run) | 16/16 in 5.6 min (software WebGL), after the light-theme layout change |
+| E2E, GPU (2026-10-28) | **Pass**: 32/32 in 2.5 min (16 original scenarios and 16 phone/tablet/desktop layout checks) on Chrome with an AMD Radeon integrated GPU (ANGLE, Direct3D 11) |
+| E2E, software (2026-10-28) | **Pass**: 9/9 @smoke tests in 5.9 min |
 | `npm audit` | 0 vulnerabilities at install time |
 | Live site (2026-10-18) | **Pass**: https://heart-anatomy-lab.vercel.app returns the page; `models/heart.glb` is served with the recorded sha256 `be55fe1c…`; the model renders in headless Chromium with no console errors |
 
@@ -88,7 +92,7 @@ Defects found and fixed while building the look:
 
 - **The real-tissue look on real GPUs.** High quality (clear coat and sheen) was reviewed in headless screenshots with `?quality=high`; its frame rate on real laptops and phones is not measured. The automatic switch to low quality on slow frames has not been tried on a real device.
 
-- **Physical devices and GPUs.** All browser tests ran with software WebGL in headless Chromium. Frame rate on a real mid-range laptop or phone, and real multitouch (pinch and two-finger pan), have not been tested.
+- **Physical devices.** Phone and tablet layouts were tested with Chrome's device emulation (viewport, touch and the mobile flag) at six sizes, not on a real phone or tablet; safe-area insets (notches), real multitouch (pinch and two-finger pan), the on-screen keyboard over the search box and the frame rate on a phone GPU are untested. Only one AMD integrated GPU was used.
 - **Other browsers.** Firefox and Safari were not run.
 - **Automated accessibility audit.** axe-core is not installed, so no automated audit was run. Keyboard paths and ARIA labels were checked by hand and by the E2E tests only.
 - **Memory over long sessions.** Materials and particle geometry are disposed on unmount, but heap growth over repeated mode switches was not measured.

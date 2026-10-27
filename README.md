@@ -7,6 +7,7 @@ An interactive 3D heart for secondary-school and first-year biology:
 - Select, search and isolate the chambers, valves, great vessels, coronary arteries and cardiac veins.
 - Follow animated blood through the pulmonary and systemic circuits.
 - Walk through an 11-step guided tour.
+- Works on phones and tablets: the details rise from the bottom in a sheet you can drag, fold or expand, and the structure list opens from the dock.
 - See it as it really looks: red-brown muscle with yellow fat along the coronary vessels, pale valves and artery walls, dark veins, and real blood colours (bright red and dark red, never blue).
 
 It is the first simulation of a planned spec-driven simulation platform. The lab renders a validated `SimulationDefinition` (plain data), so future simulations, including AI-generated ones, go through the same validation gate.

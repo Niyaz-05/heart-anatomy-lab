@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useLab } from '../app/LabContext';
 import { HeartModel, MODEL_URL } from './HeartModel';
 import { CameraRig, type ViewInsets } from './CameraRig';
+import { isTouch } from '../app/layout';
 import { FlowParticles } from './FlowParticles';
 import { LabelLayer } from './LabelLayer';
 import { hasWebGL, prefersReducedMotion } from './webgl';
@@ -133,7 +134,8 @@ export function HeartViewer({ insets = NO_INSETS }: { insets?: ViewInsets }) {
         <SceneBoundary key={attempt} onError={(e) => setError(e.message || 'Unknown error')}>
           <Canvas
             frameloop={animating ? 'always' : 'demand'}
-            dpr={[1, 2]}
+            // Phones and tablets: a lower pixel ratio keeps the frame rate up on small GPUs.
+            dpr={isTouch() ? [1, 1.5] : [1, 2]}
             camera={{ fov: 32, near: 0.005, far: 5, position: [0, 0, radius * 4] }}
             gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
             onPointerMissed={(e) => { if (e.type === 'click') dispatch({ type: 'hover', id: null }); }}

@@ -18,7 +18,7 @@ async function ready(page: Page) {
 }
 const detailTitle = (page: Page) => page.locator('#detail-title');
 
-test('loads the model without console errors', async ({ page }) => {
+test('loads the model without console errors @smoke', async ({ page }) => {
   const errors = await open(page);
   await ready(page);
   await expect(page.locator('canvas')).toBeVisible();
@@ -177,7 +177,7 @@ test('keyboard: Escape clears the selection', async ({ page }) => {
   await expect(detailTitle(page)).toHaveCount(0);
 });
 
-test('phone layout: structures open from the dock and details follow a pick', async ({ page }) => {
+test('phone layout: structures open from the dock and details follow a pick @smoke', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await open(page);
   await ready(page);
@@ -225,7 +225,7 @@ test('the About sheet holds the credits and closes with Escape', async ({ page }
   await expect(dialog).toHaveCount(0);
 });
 
-test('without WebGL the learning content still works', async ({ page }) => {
+test('without WebGL the learning content still works @smoke', async ({ page }) => {
   await open(page, '?nowebgl');
   await expect(page.getByRole('heading', { name: '3D view unavailable' })).toBeVisible();
   await page.locator('.struct-list button', { hasText: 'Tricuspid valve' }).click();

@@ -80,14 +80,29 @@ function Lab() {
   const toggleStructures = () => { if (!structuresOpen) setSheet('peek'); setStructuresOpen(!structuresOpen); };
 
   const hasSheet = state.mode !== 'explore' || state.selected !== null;
+  // A structure's details (not a mode's own panel) are open: on phones and tablets they take the screen's top bar with them.
+  const detail = state.selected !== null && state.mode !== 'tour';
   const { w, h, layout } = useLayout();
   const chrome = useChrome(root);
   const insets = useMemo(() => panelInsets(layout, w, h, { hasSheet, sheet, ...chrome }), [layout, w, h, hasSheet, sheet, chrome]);
   const touch = useMemo(isTouch, []);
+  // Show what was picked: on a phone or tablet the camera frames the structure in the space above the sheet,
+  // and frames the whole heart again when the details close.
+  const compact = layout !== 'desktop';
+  const picked = useRef<string | null>(null);
+  useEffect(() => {
+    const before = picked.current;
+    picked.current = state.selected;
+    if (!compact || state.mode === 'tour' || before === state.selected) return;
+    if (state.selected) dispatch({ type: 'camera', preset: state.camera.preset, focus: [state.selected] });
+    else if (before) dispatch({ type: 'camera', preset: state.camera.preset });
+    // The camera preset is read when the selection changes, not followed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.selected, compact, state.mode, dispatch]);
   const meshCount = def.structures.filter((s) => s.kind === 'mesh').length;
 
   return (
-    <div className="app" ref={root} data-mode={state.mode} data-layout={layout} data-sheet={hasSheet ? sheet : 'none'}>
+    <div className="app" ref={root} data-mode={state.mode} data-layout={layout} data-sheet={hasSheet ? sheet : 'none'} data-detail={detail ? 'open' : 'closed'}>
       <main className="stage">
         <HeartViewer insets={insets} />
       </main>
@@ -116,7 +131,7 @@ function Lab() {
       </aside>
 
       {hasSheet && (
-        <Sheet layout={layout} state={sheet} onState={setSheet}>
+        <Sheet layout={layout} state={sheet} onState={setSheet} dismissible={detail} onClose={() => dispatch({ type: 'select', id: null })}>
           <SidePanel />
         </Sheet>
       )}

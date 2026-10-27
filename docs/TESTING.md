@@ -27,7 +27,7 @@ Results recorded on 2026-10-16 on Windows 11, Node 22.14.0, headless Chromium (P
 9. Guided tour: Next, Back, jump to a step, Finish.
 10. Keyboard: arrow keys orbit; Escape clears the selection.
 11. Phone (390×844): no horizontal overflow; the Structures dock button opens the panel; picking a structure closes it and shows the details sheet.
-12. **Phone and tablet layouts (`tests/e2e/responsive.spec.ts`), at 390×844, 844×390, 768×1024, 820×1180, 1024×768 and 1366×820** (touch emulation below 1024 px): the layout is the expected one (`sheet`, `landscape` or `desktop`); no horizontal scroll; title, modes, dock and details stay on screen and do not overlap; at least a third of the screen is left for the model beside or above the details; finger-sized (≥ 44 px) controls on touch; the bottom sheet folds to one line, opens and expands by tap, by keyboard and by dragging the handle; every mode fits and its panel scrolls to its end; screenshots in `docs/screenshots/responsive/`.
+12. **Phone and tablet layouts (`tests/e2e/responsive.spec.ts`), at 390×844, 844×390, 768×1024, 820×1180, 1024×768 and 1366×820** (touch emulation below 1024 px): the layout is the expected one (`sheet`, `landscape` or `desktop`); no horizontal scroll; title, modes, dock and details stay on screen and do not overlap; at least a third of the screen is left for the model beside or above the details; finger-sized (≥ 44 px) controls on touch; the bottom sheet folds to one line, opens and expands by tap, by keyboard and by dragging the handle; picking a part hides the title and mode buttons, frames the part in the space above the sheet, and closing the details (✕, a tap on empty space, or dragging the sheet down by its handle, its title row or its scrolled-to-top content, as real touch events) brings them back; a mode's own panel keeps the bar and cannot be dismissed; every mode fits and its panel scrolls to its end; screenshots in `docs/screenshots/responsive/`.
 13. `?nowebgl`: a fallback message; the structure list and details still work.
 14. A missing model (HTTP 404): an error alert; Try again refetches and loads.
 14. Reduced motion: flow mode runs without errors.
@@ -43,8 +43,8 @@ Results recorded on 2026-10-16 on Windows 11, Node 22.14.0, headless Chromium (P
 | `npm run validate:assets` | **Pass**: 34 nodes, 85,624 triangles, sha256 `be55fe1cc557…` |
 | `npm run build` | **Pass**. JS bundle is 1,420 kB (394 kB gzip); Vite warns about chunk size, see Known issues |
 | `npm run e2e` (older run) | 16/16 in 5.6 min (software WebGL), after the light-theme layout change |
-| E2E, GPU (2026-10-28) | **Pass**: 32/32 in 2.5 min (16 original scenarios and 16 phone/tablet/desktop layout checks) on Chrome with an AMD Radeon integrated GPU (ANGLE, Direct3D 11) |
-| E2E, software (2026-10-28) | **Pass**: 9/9 @smoke tests in 5.9 min |
+| E2E, GPU (2026-10-28) | **Pass**: 47/47 in 4.4 min (16 original scenarios and 31 phone/tablet/desktop layout checks) on Chrome with an AMD Radeon integrated GPU (ANGLE, Direct3D 11) |
+| E2E, software (2026-10-28) | **Pass**: 9/9 @smoke tests in 6.1 min |
 | `npm audit` | 0 vulnerabilities at install time |
 | Live site (2026-10-18) | **Pass**: https://heart-anatomy-lab.vercel.app returns the page; `models/heart.glb` is served with the recorded sha256 `be55fe1c…`; the model renders in headless Chromium with no console errors |
 
@@ -87,6 +87,12 @@ Defects found and fixed while building the look:
 
 - **Muscle looked yellow.** ACES tone mapping shifted the red muscle toward orange-yellow; it is now Neutral tone mapping.
 - **Fat looked blotchy.** The first epicardial-fat mask spread over most of the ventricles. Fat is now limited to concave grooves within about 3 mm of the coronary vessels, and it keeps its brightness in shadow.
+
+## Defects found on a real phone and fixed
+
+- **The details sheet covered the part you picked** (the camera never moved on a pick, and the sheet took 45 % of the screen). The camera now frames the picked part in the space above the sheet (and the whole heart again on close); the sheet is 38 % high.
+- **The title and mode buttons stayed on screen while details were open.** They now disappear on phones and tablets until the details close (a mode's own panel keeps them, as they are the way to switch mode).
+- **The details could not be dragged away.** Dragging the sheet down by its handle, its title row or its content (scrolled to the top) closes it, a quick flick too; a tap on empty space closes it, and the ✕ is finger-sized.
 
 ## Not verified
 

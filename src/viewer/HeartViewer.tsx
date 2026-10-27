@@ -138,7 +138,12 @@ export function HeartViewer({ insets = NO_INSETS }: { insets?: ViewInsets }) {
             dpr={isTouch() ? [1, 1.5] : [1, 2]}
             camera={{ fov: 32, near: 0.005, far: 5, position: [0, 0, radius * 4] }}
             gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-            onPointerMissed={(e) => { if (e.type === 'click') dispatch({ type: 'hover', id: null }); }}
+            onPointerMissed={(e) => {
+              if (e.type !== 'click') return;
+              dispatch({ type: 'hover', id: null });
+              // On a touch screen there is no Esc key: a tap on empty space closes the details.
+              if (isTouch() && state.selected && state.mode !== 'tour') dispatch({ type: 'select', id: state.selected });
+            }}
             onCreated={({ gl }) => {
               gl.domElement.addEventListener('webglcontextlost', (ev) => {
                 ev.preventDefault();

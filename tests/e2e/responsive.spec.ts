@@ -38,6 +38,18 @@ async function inside(page: Page, l: Locator) {
   expect(b.x + b.width, 'right edge').toBeLessThanOrEqual(vp.width + 1);
   expect(b.y + b.height, 'bottom edge').toBeLessThanOrEqual(vp.height + 1);
 }
+const vpHeight = (page: Page) => page.viewportSize()!.height;
+/** A one-finger swipe straight down (or up), sent as real touch events. */
+async function swipe(page: Page, x: number, y0: number, y1: number, pauseMs = 16) {
+  const cdp = await page.context().newCDPSession(page);
+  const send = (type: 'touchStart' | 'touchMove' | 'touchEnd', y?: number) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: y === undefined ? [] : [{ x, y }] });
+  await send('touchStart', y0);
+  const steps = 12;
+  for (let i = 1; i <= steps; i++) { await send('touchMove', y0 + ((y1 - y0) * i) / steps); await page.waitForTimeout(pauseMs); }
+  await send('touchEnd');
+  await page.waitForTimeout(450);
+  await cdp.detach();
+}
 async function noHorizontalScroll(page: Page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(0);
@@ -74,12 +86,13 @@ for (const size of SIZES) {
       await pickFirst(page, size.layout);
       const sheet = page.locator('aside.right');
       await inside(page, sheet);
-      expect(overlap(await box(top), await box(sheet)), 'top bar and details').toBe(0);
+      // On phones and tablets the title and the mode buttons make way for the details.
+      if (size.layout !== 'desktop') { await expect(top).toBeHidden(); await expect(page.locator('.identity')).toBeHidden(); }
+      else await expect(top).toBeVisible();
       // At least a third of the screen is left for the model beside or above the details.
       const vp = page.viewportSize()!;
       const s = await box(sheet);
-      const t = await box(top);
-      const free = size.layout === 'sheet' ? vp.width * (s.y - (t.y + t.height)) : (s.x - (size.layout === 'desktop' ? (await box(page.locator('aside.left'))).x + (await box(page.locator('aside.left'))).width : 0)) * vp.height;
+      const free = size.layout === 'sheet' ? vp.width * s.y : (s.x - (size.layout === 'desktop' ? (await box(page.locator('aside.left'))).x + (await box(page.locator('aside.left'))).width : 0)) * vp.height;
       expect(free / (vp.width * vp.height)).toBeGreaterThan(size.layout === 'landscape' ? 0.4 : 0.3);
       await noHorizontalScroll(page);
       await page.screenshot({ path: `${SHOTS}/${size.name}-2-details.png` });
@@ -101,7 +114,6 @@ for (const size of SIZES) {
           await page.waitForTimeout(300);
           expect((await box(sheet)).height).toBeGreaterThan(half);
           await inside(page, sheet);
-          expect(overlap(await box(page.locator('.top-actions')), await box(sheet)), 'full sheet stays below the top bar').toBe(0);
         }
         await handle.click();
         await expect(app).toHaveAttribute('data-sheet', 'peek');
@@ -130,6 +142,82 @@ for (const size of SIZES) {
           await page.mouse.up();
           await expect(app).toHaveAttribute('data-sheet', 'full');
         }
+      });
+    }
+
+    if (size.layout !== 'desktop') {
+      test(`the picked part stays in view, the top bar returns when the details close`, async ({ page }) => {
+        await ready(page);
+        await pickFirst(page, size.layout);
+        await expect(page.locator('.top-actions')).toBeHidden();
+        const label = page.locator('.scene-label.is-focus');
+        await expect(label).toBeVisible({ timeout: 15_000 });
+        await page.waitForTimeout(1200); // the camera flight
+        const l = await box(label), s = await box(page.locator('aside.right'));
+        const vp = page.viewportSize()!;
+        expect(l.x).toBeGreaterThanOrEqual(0);
+        expect(l.x + l.width).toBeLessThanOrEqual(vp.width);
+        if (size.layout === 'sheet') expect(l.y + l.height, 'label above the sheet').toBeLessThanOrEqual(s.y + 1);
+        else expect(l.x + l.width, 'label left of the sheet').toBeLessThanOrEqual(s.x + 1);
+        await page.screenshot({ path: `${SHOTS}/${size.name}-4-picked.png` });
+        await page.getByRole('button', { name: 'Clear selection' }).click();
+        await expect(page.locator('aside.right')).toHaveCount(0);
+        await expect(page.locator('.top-actions')).toBeVisible();
+        await expect(page.locator('.identity h1')).toBeVisible();
+      });
+
+      test(`a tap on empty space closes the details`, async ({ page }) => {
+        await ready(page);
+        await pickFirst(page, size.layout);
+        await page.waitForTimeout(1200);
+        const vp = page.viewportSize()!;
+        // The corner of the model area, clear of the heart and of the sheet.
+        await page.touchscreen.tap(12, size.layout === 'sheet' ? 16 : vp.height / 2);
+        await expect(page.locator('aside.right')).toHaveCount(0);
+        await expect(page.locator('.top-actions')).toBeVisible();
+      });
+
+      test(`a mode's own panel keeps the top bar and cannot be dismissed`, async ({ page }) => {
+        await ready(page);
+        await page.locator('.modes button').nth(1).click();
+        await expect(page.locator('aside.right')).toBeVisible();
+        await expect(page.locator('.top-actions')).toBeVisible();
+        if (size.layout === 'sheet') {
+          const h = await box(page.locator('.sheet-handle'));
+          await swipe(page, h.x + h.width / 2, h.y + 10, vpHeight(page) - 4);
+          await expect(page.locator('aside.right')).toBeVisible();
+          await expect(page.locator('.app')).toHaveAttribute('data-sheet', 'peek');
+        }
+      });
+    }
+
+    if (size.layout === 'sheet') {
+      test(`dragging the details down closes them: by the handle, the title, or by pulling the content`, async ({ page }) => {
+        await ready(page);
+        const vh = page.viewportSize()!.height;
+        const open = async () => { await pickFirst(page, size.layout); await page.waitForTimeout(500); };
+        // 1. Down the handle, all the way.
+        await open();
+        let h = await box(page.locator('.sheet-handle'));
+        await swipe(page, h.x + h.width / 2, h.y + 10, vh - 4);
+        await expect(page.locator('aside.right')).toHaveCount(0);
+        await expect(page.locator('.top-actions')).toBeVisible();
+        // 2. By the title row.
+        await open();
+        const head = await box(page.locator('.detail-head'));
+        await swipe(page, head.x + head.width / 2 - 30, head.y + head.height / 2, vh - 4);
+        await expect(page.locator('aside.right')).toHaveCount(0);
+        // 3. Pulling down on the content (scrolled to its top).
+        await open();
+        const body = await box(page.locator('.detail-panel .lead, .detail-panel p').first());
+        await swipe(page, body.x + 20, body.y + 4, vh - 4);
+        await expect(page.locator('aside.right')).toHaveCount(0);
+        // 4. A short, slow drag only folds it to its one-line height (a quick one is a flick and closes it).
+        await open();
+        h = await box(page.locator('.sheet-handle'));
+        await swipe(page, h.x + h.width / 2, h.y + 10, h.y + 10 + vh * 0.2, 90);
+        await expect(page.locator('aside.right')).toBeVisible();
+        await expect(page.locator('.app')).toHaveAttribute('data-sheet', 'peek');
       });
     }
 

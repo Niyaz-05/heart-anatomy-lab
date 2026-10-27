@@ -12,7 +12,7 @@ export type Layout = 'desktop' | 'sheet' | 'landscape';
 export type SheetState = 'peek' | 'half' | 'full';
 
 export const PEEK_PX = 72;
-export const HALF = 0.45;
+export const HALF = 0.38;
 
 export function layoutFor(w: number, h: number): Layout {
   if (h <= 560 && w > h) return 'landscape';
